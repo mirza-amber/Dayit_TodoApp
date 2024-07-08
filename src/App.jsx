@@ -42,7 +42,7 @@ function App() {
     }
     else{
       let myuuid = uuidv4();
-      inval != "" ? setTlist([...tlist, { id: myuuid, inval, iscompleted: false }]) : alert("Enter a task to track")
+      setTlist([...tlist, { id: myuuid, inval, iscompleted: false }])
       setInval('')
     }
     inputtoadd.current.focus()
@@ -101,28 +101,33 @@ function App() {
   return (
     <>
       <Navbar />
-      <div className="main bg-slate-200 h-[100vh] w-[100vw] p-6 overflow-x-hidden">
+      <div className="main bg-gradient-to-r from-teal-900 to-slate-400 h-[100vh] w-[100vw] p-6 overflow-x-hidden">
 
-        <div className="inside1 h-[85vh] rounded-3xl w-[80vw] mx-auto flex gap-5 flex-col justify-center items-center text-white">
+        <div className="inside1 h-[85vh] rounded-3xl w-[80vw] mx-auto flex gap-3 flex-col justify-center items-center text-white">
           {/* Upper div */}
-          <div className="addbox bg-slate-600 h-[16%] w-[70%] rounded-[26px] flex justify-center items-center gap-10">
-            <input ref={inputtoadd} type="text" value={inval} onChange={changein} className='w-[62%] h-10 px-3 rounded-xl bg-[#EEEEEE] text-black cursor-text outline-none focus:bg-slate-200 transition-all' />
-            <button className='w-24 h-12 bg-[#ff6a00] rounded-lg font-semibold text-base hover:scale-110 transition-all' onClick={submit} >Add Task</button>
+          <div className="addbox bg- h-[13.5%] w-[70%] rounded-[18px] flex justify-center items-center gap-10">
+            <input ref={inputtoadd} type="text" value={inval} onChange={changein} className='w-[68%] h-10 px-3 rounded-xl bg-[#EEEEEE] shadow-slate-700 shadow-[2px_3px_8px_rgba(0,0,0,0.38)] focus:shadow-[4.0px_4.0px_8.0px_rgba(0,0,0,0.38)] focus:shadow-slate-900 text-black cursor-text outline-none focus:-translate-y-[2px] transition-all duration-300' />
+            <button disabled={inval.length < 3} className='disabled:bg-[#c95400] w-24 h-12 bg-[#ff6a00] rounded-lg font-semibold text-base hover:scale-105 transition-all cursor-pointer' onClick={submit} >Add Task</button>
+          </div>
+          {/* Middle Div */}
+          <div className="switchlist h-[5%] w-[70%] flex justify-center items-center gap-10 text-center transition-all duration-600">
+            <div className="pending w-[12%] rounded-md font-normal bg-slate-800 hover:-translate-y-1 transition-all cursor-pointer duration-200 shadow-slate-800 shadow-[2.0px_2.0px_4.0px_rgba(0,0,0,0.38)] hover:shadow-[2.0px_4.0px_8.0px_rgba(0,0,0,0.38)]">Pending</div>
+            <div className="completed w-[12%] bg-or rounded-md font-normal bg-slate-800 hover:-translate-y-1 transition-all cursor-pointer duration-200 shadow-slate-800 shadow-[2.0px_2.0px_4.0px_rgba(0,0,0,0.38)] hover:shadow-[2.0px_4.0px_8.0px_rgba(0,0,0,0.38)]">Completed</div>
           </div>
 
           {/* List Div */}
-          <div className="itembox bg-[#EEEEEE] border-slate-600 border-[7px] rounded-[18px] h-[69%] w-[70%] overflow-y-auto overflow-x-hidden">
+          <div className="itembox bg-[#EEEEEE] border-slate-600 rounded-[10px] h-[69%] w-[70%] overflow-y-auto overflow-x-hidden">
             <ul className='flex justify-start items-start gap-4 flex-col py-6 px-5 transition-all text-black '>
 
               {tlist.length > 0 ? (tlist && tlist.map && tlist.map((ls) => {
                 return <div key={ls.id} className='flex justify-between items-start w-[99%]'>
-                  <input type="checkbox" name={ls.id} value={ls.iscompleted} onChange={checkchange} className='mt-2 scale-125' />
+                  <input type="checkbox" name={ls.id} checked={ls.iscompleted} onChange={checkchange} className='mt-2 scale-125' />
                   <li className={`workliststyle list-none w-[80%] border-b-[0.5px] border-gray-400 rounded-sm px-2 ${ls.iscompleted ? 'line-through' : ''}`}>{ls.inval}</li>
 
-                  <div className='flex gap-3 text-neutral-200'>
+                  <div className='flex gap-3 text-neutral-100'>
 
-                    <button onClick={e => edithandler(e, ls.id)} className='w-12 h-7 bg-[#74828c] rounded-lg hover:scale-105 transition-all'>Edit</button>
-                    <button onClick={e => deletehandler(e, ls.id)} className='w-[60px] h-7 rounded-lg bg-[#74828c] hover:scale-105 transition-all'>Delete</button>
+                    <button onClick={e => edithandler(e, ls.id)} className='w-12 h-7 bg-slate-300 text-gray-500 rounded-lg hover:scale-105 font-medium shadow-[1.0px_1.0px_1.0px_rgba(0,0,0,0.38)] transition-all hover:shadow-[2.0px_2.0px_4.0px_rgba(0,0,0,0.38)]'>Edit</button>
+                    <button onClick={e => deletehandler(e, ls.id)} className='w-[60px] h-7 rounded-lg bg-slate-300 text-gray-500 font-medium hover:scale-105 transition-all shadow-[1.0px_1.0px_1.0px_rgba(0,0,0,0.38)] hover:shadow-[2.0px_2.0px_4.0px_rgba(0,0,0,0.38)]'>Delete</button>
                   </div>
 
                 </div>
