@@ -5,6 +5,9 @@ import { v4 as uuidv4 } from 'uuid';
 function App() {
   const [inval, setInval] = useState("")
   const [tlist, setTlist] = useState([])
+  const [switchlist, setSwitchlist] = useState(true)
+
+  const [booleacompleted, setBooleacompleted]= useState(false)
   const editindex = useRef(null)
   const inputtoadd = useRef(null)
 
@@ -96,12 +99,33 @@ function App() {
     inputtoadd.current.focus()
   }
 
+  function listtoggle(e){
+    e.target.id=='alltask'?setSwitchlist(true):setSwitchlist(false)
+    // console.log(tlist)
+    e.target.id=='pending'&&setBooleacompleted(false)
+    
+    e.target.id=="completed"?setBooleacompleted(true):setBooleacompleted(false)
 
+
+    console.log(booleacompleted)
+  }
+
+  function checkcondition(boolea){
+    if(boolea && booleacompleted){
+       return true
+    }
+    else if(boolea==false && booleacompleted==false){
+      return true
+    }
+    else{
+      return false
+    }
+  }
 
   return (
     <>
       <Navbar />
-      <div className="main bg-gradient-to-r from-teal-900 to-slate-400 h-[100vh] w-[100vw] p-6 overflow-x-hidden">
+      <div className="main bg-gradient-to-r from-gray-500 to-slate-300 h-[100vh] w-[100vw] p-6 overflow-x-hidden">
 
         <div className="inside1 h-[85vh] rounded-3xl w-[80vw] mx-auto flex gap-3 flex-col justify-center items-center text-white">
           {/* Upper div */}
@@ -111,8 +135,9 @@ function App() {
           </div>
           {/* Middle Div */}
           <div className="switchlist h-[5%] w-[70%] flex justify-center items-center gap-10 text-center transition-all duration-600">
-            <div className="pending w-[12%] rounded-md font-normal bg-slate-800 hover:-translate-y-1 transition-all cursor-pointer duration-200 shadow-slate-800 shadow-[2.0px_2.0px_4.0px_rgba(0,0,0,0.38)] hover:shadow-[2.0px_4.0px_8.0px_rgba(0,0,0,0.38)]">Pending</div>
-            <div className="completed w-[12%] bg-or rounded-md font-normal bg-slate-800 hover:-translate-y-1 transition-all cursor-pointer duration-200 shadow-slate-800 shadow-[2.0px_2.0px_4.0px_rgba(0,0,0,0.38)] hover:shadow-[2.0px_4.0px_8.0px_rgba(0,0,0,0.38)]">Completed</div>
+            <div id='alltask' onClick={e=>listtoggle(e)} className="pending w-[20%] rounded-md font-normal bg-slate-700 hover:bg-slate-900 hover:-translate-y-1 transition-all cursor-pointer duration-200 shadow-black hover:shadow-slate-800 shadow-[3.0px_2.0px_4.0px_rgba(0,0,0,0.38)] hover:shadow-[4.0px_4.0px_8.0px_rgba(0,0,0,0.38)]">Your day</div>
+            <div id='pending' onClick={e=>listtoggle(e)} className="completed w-[20%] bg-or rounded-md font-normal bg-slate-700 hover:bg-slate-900 hover:-translate-y-1 transition-all cursor-pointer duration-200 shadow-black hover:shadow-slate-800 shadow-[3.0px_2.0px_4.0px_rgba(0,0,0,0.38)] hover:shadow-[4.0px_4.0px_8.0px_rgba(0,0,0,0.38)]">Pending</div>
+            <div id='completed' onClick={e=>listtoggle(e)} className="completed w-[20%] bg-or rounded-md font-normal bg-slate-700 hover:bg-slate-900 hover:-translate-y-1 transition-all cursor-pointer duration-200 shadow-black hover:shadow-slate-800 shadow-[3.0px_2.0px_4.0px_rgba(0,0,0,0.38)] hover:shadow-[4.0px_4.0px_8.0px_rgba(0,0,0,0.38)]">Completed</div>
           </div>
 
           {/* List Div */}
@@ -120,9 +145,9 @@ function App() {
             <ul className='flex justify-start items-start gap-4 flex-col py-6 px-5 transition-all text-black '>
 
               {tlist.length > 0 ? (tlist && tlist.map && tlist.map((ls) => {
-                return <div key={ls.id} className='flex justify-between items-start w-[99%]'>
+                return (switchlist || checkcondition(ls.iscompleted))&&(<div key={ls.id} className='flex justify-between items-start w-[99%]'>
                   <input type="checkbox" name={ls.id} checked={ls.iscompleted} onChange={checkchange} className='mt-2 scale-125' />
-                  <li className={`workliststyle list-none w-[80%] border-b-[0.5px] border-gray-400 rounded-sm px-2 ${ls.iscompleted ? 'line-through' : ''}`}>{ls.inval}</li>
+                  <li className={`workliststyle list-none w-[80%] border-b-[0.5px] border-gray-400 rounded-sm px-2 font-medium ${ls.iscompleted ? 'line-through' : ''}`}>{ls.inval}</li>
 
                   <div className='flex gap-3 text-neutral-100'>
 
@@ -130,7 +155,7 @@ function App() {
                     <button onClick={e => deletehandler(e, ls.id)} className='w-[60px] h-7 rounded-lg bg-slate-300 text-gray-500 font-medium hover:scale-105 transition-all shadow-[1.0px_1.0px_1.0px_rgba(0,0,0,0.38)] hover:shadow-[2.0px_2.0px_4.0px_rgba(0,0,0,0.38)]'>Delete</button>
                   </div>
 
-                </div>
+                </div>)
               })):(
                 <li className='workliststyle list-none w-[99%] text-xl rounded-sm px-2 text-center'>Add a Task to plan your Day !</li>
               )
