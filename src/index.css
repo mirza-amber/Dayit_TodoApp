@@ -11,3 +11,7 @@ body{
     overflow-x: hidden;
     overflow-y: hidden;
 }
+
+.switchboxtransition{
+    transition: height 0.2s ease-in-out, transform 0.15s ease-in-out, box-shadow 0.1s ease-in-out,
+}

@@ -131,17 +131,17 @@ function App() {
           {/* Upper div */}
           <div className="addbox bg- h-[13%] w-[70%] rounded-[18px] flex justify-center items-center gap-10">
             <input ref={inputtoadd} type="text" value={inval} onChange={changein} className='w-[68%] h-10 px-3 rounded-xl bg-[#EEEEEE] shadow-slate-700 shadow-[2px_3px_8px_rgba(0,0,0,0.38)] focus:shadow-[4.0px_4.0px_8.0px_rgba(0,0,0,0.38)] focus:shadow-slate-900 text-black cursor-text outline-none focus:-translate-y-[2px] transition-all duration-300' />
-            <button disabled={inval.length < 3} className='disabled:bg-[#c95400] w-24 h-12 bg-[#ff6a00] rounded-lg font-semibold text-base hover:scale-105 transition-all cursor-pointer' onClick={submit} >Add Task</button>
+            <button disabled={inval.length < 3} className='disabled:bg-slate-400 duration-[800ms] w-24 h-11 bg-[#ff6a00] rounded-lg font-semibold text-base hover:scale-105 transition-all cursor-pointer' onClick={submit} >Add Task</button>
           </div>
           {/* Middle Div */}
-          <div className="switchlist h-[8%] w-[70%] flex justify-center items-center gap-10 text-center transition-all duration-600">
-            <div id='alltask' onClick={e=>listtoggle(e)} className="pending w-[20%] rounded-md font-normal bg-slate-700 hover:bg-slate-900 hover:-translate-y-1 transition-all cursor-pointer duration-200 shadow-black hover:shadow-slate-800 shadow-[3.0px_2.0px_4.0px_rgba(0,0,0,0.38)] hover:shadow-[4.0px_4.0px_8.0px_rgba(0,0,0,0.38)]">Your day</div>
-            <div id='pending' onClick={e=>listtoggle(e)} className="completed w-[20%] bg-or rounded-md font-normal bg-slate-700 hover:bg-slate-900 hover:-translate-y-1 transition-all cursor-pointer duration-200 shadow-black hover:shadow-slate-800 shadow-[3.0px_2.0px_4.0px_rgba(0,0,0,0.38)] hover:shadow-[4.0px_4.0px_8.0px_rgba(0,0,0,0.38)]">Pending</div>
-            <div id='completed' onClick={e=>listtoggle(e)} className="completed w-[20%] bg-or rounded-md font-normal bg-slate-700 hover:bg-slate-900 hover:-translate-y-1 transition-all cursor-pointer duration-200 shadow-black hover:shadow-slate-800 shadow-[3.0px_2.0px_4.0px_rgba(0,0,0,0.38)] hover:shadow-[4.0px_4.0px_8.0px_rgba(0,0,0,0.38)]">Completed</div>
+          <div className=" switchlist h-[8%] w-[70%] flex justify-center items-center gap-10 text-center transition-all duration-700">
+            <div id='alltask' onClick={e=>listtoggle(e)} className={`yourday w-[20%] flex justify-center items-center pending rounded-md font-normal bg-slate-700 transition-all cursor-pointer duration-200 shadow-black switchboxtransition ${switchlist&&checkcondition(true)==false?"scale-110 bg-slate-900 -translate-y-1 shadow-[4.0px_5.0px_5.0px_rgba(0,0,0,0.38)]":"h-[50%] shadow-[3.0px_2.0px_4.0px_rgba(0,0,0,0.38)] hover:-translate-y-1 hover:shadow-[4.0px_5.0px_5.0px_rgba(0,0,0,0.38)] hover:shadow-black"}`}>Your day</div>
+            <div id='pending' onClick={e=>listtoggle(e)} className={`pending w-[20%] flex justify-center items-center bg-or rounded-md font-normal bg-slate-700 transition-all cursor-pointer duration-200 shadow-black switchboxtransition ${checkcondition(false)&&switchlist==false?"scale-110 bg-slate-900 -translate-y-1 shadow-[4.0px_5.0px_5.0px_rgba(0,0,0,0.38)]":"h-[50%] shadow-[3.0px_2.0px_4.0px_rgba(0,0,0,0.38)] hover:-translate-y-1 hover:shadow-[4.0px_5.0px_5.0px_rgba(0,0,0,0.38)] hover:shadow-black"}`}>Pending</div>
+            <div id='completed' onClick={e=>listtoggle(e)} className={`completed w-[20%] flex justify-center items-center bg-or rounded-md font-normal bg-slate-700 transition-all cursor-pointer duration-200 shadow-black switchboxtransition ${checkcondition(true)?"scale-110 bg-slate-900 -translate-y-1 shadow-[4.0px_5.0px_5.0px_rgba(0,0,0,0.38)]":"h-[50%] shadow-[3.0px_2.0px_4.0px_rgba(0,0,0,0.38)] hover:-translate-y-1 hover:shadow-[4.0px_5.0px_5.0px_rgba(0,0,0,0.38)] hover:shadow-black"}`}>Completed</div>
           </div>
 
           {/* List Div */}
-          <div className="itembox bg-[#EEEEEE] border-slate-600 rounded-[10px] h-[70%] w-[80%] overflow-y-auto overflow-x-hidden">
+          <div className=" itembox bg-[#EEEEEE] bg-gradient-to-tr from-slate-300 to-slate-100  shadow-slate-800 shadow-[1.2px_1.5px_10.0px_rgba(0,0,0,0.38)] transition-all duration-700 rounded-[10px] h-[70%] w-[80%] overflow-y-auto overflow-x-hidden">
             <ul className='flex justify-start items-start gap-4 flex-col py-6 px-5 transition-all text-black '>
 
               {tlist.length > 0 ? (tlist && tlist.map && tlist.map((ls) => {
