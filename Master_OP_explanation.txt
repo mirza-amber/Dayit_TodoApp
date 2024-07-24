@@ -1,0 +1,15 @@
+Inside the map function write a condition to check if your 'checkboxobject' is checked or not, you can do this by using 'checkboxobject.checked == true/false', 
+now the complete condition should be something like this 
+(checkboxobject.checked == false ||item.iscompleted == true')
+
+Here, 'item' is the iteration of the map function.
+And Replace the 'checkboxobject' with actual reference to your checkbox element (you can do this by useRef hook)
+
+NOTE :
+Javascript reads this condition as:
+Condiiton1 || Condition2:
+Now, JS will never check Condition 2 if Condition1 is satisfied. 
+If checkbox is not checked, condition1 (checkboxobject.checked == false) will be True.
+
+Now when you click on your checkbox it will be activated, and condition1 will become False. (Now you are supposed to show Task that are completed.)
+then the JS will check for second condiiton2, Now second condition will only allow the iterations in which iscompleted == true.
